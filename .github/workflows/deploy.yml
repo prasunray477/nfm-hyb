@@ -1,0 +1,54 @@
+name: Test and Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ── Job 1: Run Tests ──────────────────────────────────────────────
+  test:
+    name: Run Test Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      - name: Create required directories
+        run: |
+          mkdir -p data/raw data/processed \
+                   data/models/bilstm data/models/arima \
+                   data/results
+
+      - name: Run tests with coverage
+        run: |
+          pytest tests/ -v --cov=ml --cov=app \
+                 --cov-report=term-missing \
+                 --cov-fail-under=70
+
+  # ── Job 2: Deploy to Render (only on main push) ────────────────────
+  deploy:
+    name: Trigger Render Deploy
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Trigger Render deploy hook
+        run: |
+          curl -s -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}" \
+               -o /dev/null -w "HTTP Status: %{http_code}\n"

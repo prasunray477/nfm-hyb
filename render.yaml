@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: neutrosophic-stock-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: API_HOST
+        value: "0.0.0.0"
+      - key: API_PORT
+        value: "8000"
+      - key: PYTHON_VERSION
+        value: "3.11"
