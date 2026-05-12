@@ -13,7 +13,13 @@ _job_status: dict = {}
 
 
 class TrainRequest(BaseModel):
-    ticker: str = Field(..., min_length=1, max_length=20, example="MSFT")
+    ticker: str = Field(
+        ...,
+        min_length=1,
+        max_length=20,
+        example="MSFT",
+        description="Stock Symbol"
+    )
     period: str = Field("5y", description="yfinance period string")
     use_adaptive: bool = False
 
@@ -32,7 +38,7 @@ class TrainStatusResponse(BaseModel):
 
 
 def _run_training_job(job_id: str, ticker: str, period: str, adaptive: bool):
-    """Background task: runs pipeline and stores result."""
+    """Background task: runs the analysis engine and stores result."""
     _job_status[job_id] = {"status": "running", "result": None, "error": None}
     try:
         pipeline = ForecastPipeline(
@@ -67,14 +73,14 @@ def _run_training_job(job_id: str, ticker: str, period: str, adaptive: bool):
 @router.post(
     "/train",
     response_model=TrainResponse,
-    summary="Trigger async training pipeline"
+    summary="Trigger async training analysis engine"
 )
 def trigger_training(
     request: TrainRequest,
     background_tasks: BackgroundTasks
 ):
     """
-    Start the full pipeline as a background job.
+    Start the full analysis engine as a background job.
     Returns a job_id immediately. Poll /api/train/status/{job_id}
     to check completion.
     """
