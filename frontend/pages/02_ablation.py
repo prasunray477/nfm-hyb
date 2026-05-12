@@ -1,9 +1,9 @@
 import streamlit as st
 import httpx
 import plotly.graph_objects as go
-import os
+from config import get_api_url
 
-API_URL = st.secrets.get("API_URL", os.getenv("API_URL", "http://localhost:8000"))
+API_URL = get_api_url()
 
 st.title("🔬 Ablation Study")
 st.markdown(r"""
@@ -77,5 +77,13 @@ if run_ablation:
 
         except httpx.TimeoutException:
             st.error("Request timed out. Try a shorter period ('3y').")
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code == 503:
+                st.error(
+                    "Market data is unavailable. The backend could not reach "
+                    f"Yahoo Finance: {e.response.text}"
+                )
+            else:
+                st.error(f"API Error {e.response.status_code}: {e.response.text}")
         except Exception as e:
             st.error(f"Error: {e}")

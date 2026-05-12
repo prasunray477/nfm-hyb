@@ -2,6 +2,9 @@ import os
 import sys
 from loguru import logger
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
+
 # Remove default handler
 logger.remove()
 

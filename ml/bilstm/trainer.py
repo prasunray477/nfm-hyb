@@ -140,7 +140,7 @@ class BiLSTMTrainer:
         logger.info(
             f"Bi-LSTM training complete. "
             f"Best val_loss: {best_val:.6f}. "
-            f"Saved → {save_path}"
+            f"Saved to {save_path}"
         )
         return self.history
 

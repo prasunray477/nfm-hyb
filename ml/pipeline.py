@@ -41,7 +41,7 @@ class ForecastPipeline:
 
     def run(self) -> dict:
         logger.info(
-            f"═══ Pipeline START: {self.ticker} ═══"
+            f"Pipeline START: {self.ticker}"
         )
 
         # ── Phase 1: Data ──────────────────────────────────────────
@@ -183,7 +183,7 @@ class ForecastPipeline:
         )
 
         logger.info(
-            f"═══ Pipeline COMPLETE: {self.ticker} ═══ "
+            f"Pipeline COMPLETE: {self.ticker} "
             f"RMSE={metrics['RMSE']:.4f} | "
             f"DA={metrics['Directional_Accuracy']:.1f}%"
         )

@@ -10,6 +10,7 @@ build/
 # Data (never commit raw or processed data)
 data/raw/
 data/processed/
+data/yfinance_cache/
 data/results/*.json
 data/results/*.log
 

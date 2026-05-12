@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.models.schemas import PredictRequest, PredictResponse
+from app.services.data_service import DataFetchError
 from ml.pipeline import ForecastPipeline
 from app.core.logger import logger
 
@@ -39,6 +40,10 @@ def predict(request: PredictRequest):
     except ValueError as e:
         logger.warning(f"Validation error for {request.ticker}: {e}")
         raise HTTPException(status_code=400, detail=str(e))
+
+    except DataFetchError as e:
+        logger.warning(f"Market data unavailable for {request.ticker}: {e}")
+        raise HTTPException(status_code=503, detail=str(e))
 
     except Exception as e:
         logger.error(f"Pipeline error for {request.ticker}: {e}")

@@ -1,10 +1,10 @@
 import streamlit as st
 import httpx
-import os
+from config import get_api_url
 from components.charts import plot_forecast
 from components.metrics_display import show_metrics
 
-API_URL = st.secrets.get("API_URL", os.getenv("API_URL", "http://localhost:8000"))
+API_URL = get_api_url()
 
 st.title("🔮 Stock Price Forecast")
 st.markdown("Run the full Neutrosophic Bi-LSTM + ARIMA pipeline on any stock ticker.")
@@ -73,7 +73,13 @@ if submitted:
             )
 
         except httpx.HTTPStatusError as e:
-            st.error(f"API Error {e.response.status_code}: {e.response.text}")
+            if e.response.status_code == 503:
+                st.error(
+                    "Market data is unavailable. The backend could not reach "
+                    f"Yahoo Finance: {e.response.text}"
+                )
+            else:
+                st.error(f"API Error {e.response.status_code}: {e.response.text}")
         except httpx.TimeoutException:
             st.error(
                 "Request timed out. The model may still be training. "

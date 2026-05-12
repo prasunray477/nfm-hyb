@@ -125,7 +125,7 @@ class ARIMAForecaster:
             'order': self.order,
             'train_series': self._train_series
         }, path)
-        logger.info(f"ARIMA config saved → {path}")
+        logger.info(f"ARIMA config saved to {path}")
         return path
 
     def load(self, ticker: str) -> "ARIMAForecaster":
