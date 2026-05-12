@@ -7,6 +7,8 @@ from app.core.logger import logger
 class DataService:
     """Fetches and validates historical OHLCV data."""
 
+    last_dates: list[str] = []
+
     @staticmethod
     def fetch(
         ticker: str,
@@ -59,6 +61,9 @@ class DataService:
             prices = df['Close'].dropna().values.flatten()
 
         prices = prices.astype(np.float32)
+        DataService.last_dates = [
+            idx.strftime("%Y-%m-%d") for idx in prices_series.index
+        ]
 
         if len(prices) < config.MIN_TRADING_DAYS:
             raise ValueError(

@@ -9,12 +9,12 @@ router = APIRouter(tags=["Prediction"])
 @router.post(
     "/predict",
     response_model=PredictResponse,
-    summary="Run full forecasting pipeline for a stock ticker"
+    summary="Run full forecasting analysis engine for a stock symbol"
 )
 def predict(request: PredictRequest):
     """
     Execute the complete Neutrosophic Bi-LSTM + ARIMA
-    forecasting pipeline for the given stock ticker.
+    forecasting analysis engine for the given stock symbol.
 
     - Downloads historical data via yfinance
     - Applies neutrosophic normalization
@@ -34,6 +34,8 @@ def predict(request: PredictRequest):
             period=request.period
         )
         results = pipeline.run()
+        future = pipeline.forecast_future(n_days=30)
+        results.update(future)
         return PredictResponse(**results)
 
     except ValueError as e:

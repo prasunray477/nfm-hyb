@@ -33,7 +33,7 @@ The predictions from both the Bi-LSTM and ARIMA models are optimally combined ($
 ## 🚀 Key Features
 - **Real-Time Data Fetching:** Directly downloads live OHLCV data using Yahoo Finance (`yfinance`).
 - **Stationarity Enforcement:** Automatically runs Augmented Dickey-Fuller (ADF) tests and applies differencing.
-- **Ablation Study Dashboard:** Run 6 different configurations (from baseline ARIMA to the Full Hybrid model) to directly quantify the contribution of each component.
+- **Comparative Analysis Dashboard:** Run six model configurations, from baseline ARIMA to the Full Optimized Model, to quantify the contribution of each component.
 - **Dynamic Weight Optimization:** Uses Grid Search to find the mathematically optimal blend of Bi-LSTM and ARIMA forecasts on the validation set.
 
 ---
@@ -48,8 +48,8 @@ neutrosophic-stock-forecast/
 │   └── services/         # yfinance data collection
 ├── frontend/             # Streamlit Interactive UI
 │   ├── components/       # Plotly charts and metrics
-│   └── pages/            # Predict, Ablation, and About pages
-├── ml/                   # Machine Learning Pipeline
+│   └── pages/            # Predict, Comparative Analysis, and About pages
+├── ml/                   # Machine Learning analysis engine
 │   ├── aggregator/       # Weight optimization logic
 │   ├── arima/            # Auto-ARIMA statistical modeling
 │   ├── bilstm/           # TensorFlow Keras architecture
@@ -128,8 +128,8 @@ The application will open in your browser automatically at: `http://localhost:85
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/api/health` | Check API status |
-| `POST` | `/api/predict` | Run the full 7-phase forecasting pipeline for a given ticker |
-| `POST` | `/api/train` | Run the pipeline asynchronously in the background |
+| `POST` | `/api/predict` | Run the full 7-phase forecasting analysis engine for a given stock symbol |
+| `POST` | `/api/train` | Run the analysis engine asynchronously in the background |
 
 **Example Request:**
 ```bash
