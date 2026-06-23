@@ -1,4 +1,4 @@
-# 📈 Neutrosophic Bi-LSTM + ARIMA Stock Forecasting System
+# Neutrosophic Bi-LSTM + ARIMA Stock Forecasting System
 
 ![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.109.0-009688?logo=fastapi)
@@ -11,7 +11,7 @@ This project provides both an interactive frontend dashboard for stock analysis 
 
 ---
 
-## 📖 Theoretical Foundation
+## Theoretical Foundation
 
 ### 1. Neutrosophic Logic Normalization
 Standard Min-Max normalization collapses price fluctuations into a simple scalar, ignoring the "chaos" or market uncertainty. This system transforms raw market data into a 3-Dimensional Neutrosophic Set:
@@ -30,7 +30,7 @@ The predictions from both the Bi-LSTM and ARIMA models are optimally combined ($
 
 ---
 
-## 🚀 Key Features
+## Key Features
 - **Real-Time Data Fetching:** Directly downloads live OHLCV data using Yahoo Finance (`yfinance`).
 - **Stationarity Enforcement:** Automatically runs Augmented Dickey-Fuller (ADF) tests and applies differencing.
 - **Comparative Analysis Dashboard:** Run six model configurations, from baseline ARIMA to the Full Optimized Model, to quantify the contribution of each component.
@@ -38,7 +38,7 @@ The predictions from both the Bi-LSTM and ARIMA models are optimally combined ($
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 neutrosophic-stock-forecast/
@@ -61,7 +61,7 @@ neutrosophic-stock-forecast/
 
 ---
 
-## 🛠️ Setup and Installation
+## Setup and Installation
 
 ### Prerequisites
 - Python 3.11+
@@ -102,7 +102,7 @@ cp .env.example .env
 
 ---
 
-## 💻 Running the Application
+## Running the Application
 
 This system consists of two parts that need to be run concurrently: the **FastAPI Backend** and the **Streamlit Frontend**.
 
@@ -145,5 +145,3 @@ curl -X 'POST' \
 
 ---
 
-## 📝 License
-...
